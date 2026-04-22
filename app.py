@@ -3,12 +3,13 @@ import streamlit as st
 st.title("Калькулятор позиции")
 
 # Ввод
-deposit = st.number_input("Депозит ($)", min_value=1.0, value=100000.0)
-risk_percent = st.number_input("Риск (%)", min_value=0.1, value=1.0)
-entry = st.number_input("Цена входа", value=0.0)
-stop = st.number_input("Стоп", value=0.0)
-rr = st.number_input("RR (например 2)", min_value=0.1, value=2.0)
+deposit = st.number_input("Депозит ($)", min_value=1.0, value=100000.0, format="%g")
+risk_percent = st.number_input("Риск (%)", min_value=0.1, value=1.0, format="%g")
+entry = st.number_input("Цена входа", value=0.0, format="%g")
+stop = st.number_input("Стоп", value=0.0, format="%g")
+rr = st.number_input("RR (например 2)", min_value=0.1, value=2.0, format="%g")
 
+# Кнопка
 if st.button("Рассчитать"):
 
     if entry == stop:
@@ -29,7 +30,7 @@ if st.button("Рассчитать"):
         percent_move = (stop_distance / entry) * 100
         position_value = risk_amount / (percent_move / 100)
 
-        # округление
+        # округление (чтобы не было мусора)
         risk_amount = round(risk_amount, 2)
         percent_move = round(percent_move, 4)
         position_value = round(position_value, 2)
